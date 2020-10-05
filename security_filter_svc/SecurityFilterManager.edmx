@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AccountsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityType Name="AccountLockouts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="LockoutCount" Type="smallint" Nullable="false" />
+          <Property Name="LockoutTime" Type="datetime" Nullable="false" />
+          <Property Name="IpAddress" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AuthorizedDomains">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="NetBIOS" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UPN" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Filter" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ProtectedService" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Device" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="IP" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="FailedLoginCount" Type="int" Nullable="false" />
+          <Property Name="Notified" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SecurityFilterSettings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RowVersion" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="Period" Type="int" Nullable="false" />
+          <Property Name="WhiteList" Type="bit" Nullable="false" />
+          <Property Name="BlockNTLM" Type="bit" Nullable="false" />
+          <Property Name="EnforceDeviceAuthorization" Type="bit" Nullable="false" />
+          <Property Name="InternalNetworkSubnets" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityContainer Name="AccountsModelStoreContainer">
+          <EntitySet Name="AccountLockouts" EntityType="Self.AccountLockouts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AuthorizedDomains" EntityType="Self.AuthorizedDomains" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SecurityFilterSettings" EntityType="Self.SecurityFilterSettings" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="AccountsModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="AccountEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AccountLockouts" EntityType="AccountsModel.AccountLockout" />
+          <EntitySet Name="Logs" EntityType="AccountsModel.Log" />
+          <EntitySet Name="SecurityFilterSettings" EntityType="AccountsModel.SecurityFilterSetting" />
+          <EntitySet Name="AuthorizedDomains" EntityType="AccountsModel.AuthorizedDomain" />
+        </EntityContainer>
+        <EntityType Name="AccountLockout">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Type="String" Name="Username" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Int16" Name="LockoutCount" Nullable="false" />
+          <Property Type="DateTime" Name="LockoutTime" Nullable="false" Precision="3" />
+          <Property Type="String" Name="IpAddress" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Filter" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ProtectedService" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Device" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Username" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="IP" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="DateTime" Nullable="false" Precision="3" />
+          <Property Type="String" Name="Status" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="FailedLoginCount" Nullable="false" />
+          <Property Type="Boolean" Name="Notified" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SecurityFilterSetting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Type="Int32" Name="Count" Nullable="false" />
+          <Property Type="Int32" Name="Period" Nullable="false" />
+          <Property Type="Boolean" Name="WhiteList" Nullable="false" />
+          <Property Name="BlockNTLM" Type="Boolean" Nullable="false" />
+          <Property Name="EnforceDeviceAuthorization" Type="Boolean" Nullable="false" />
+          <Property Name="InternalNetworkSubnets" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AuthorizedDomain">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Binary" Name="RowVersion" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Type="String" Name="NetBIOS" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="UPN" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AccountsModelStoreContainer" CdmEntityContainer="AccountEntities">
+          <EntitySetMapping Name="AccountLockouts">
+            <EntityTypeMapping TypeName="AccountsModel.AccountLockout">
+              <MappingFragment StoreEntitySet="AccountLockouts">
+                <ScalarProperty Name="IpAddress" ColumnName="IpAddress" />
+                <ScalarProperty Name="LockoutTime" ColumnName="LockoutTime" />
+                <ScalarProperty Name="LockoutCount" ColumnName="LockoutCount" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="AccountsModel.Log">
+              <MappingFragment StoreEntitySet="Log">
+                <ScalarProperty Name="Notified" ColumnName="Notified" />
+                <ScalarProperty Name="FailedLoginCount" ColumnName="FailedLoginCount" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="IP" ColumnName="IP" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Device" ColumnName="Device" />
+                <ScalarProperty Name="ProtectedService" ColumnName="ProtectedService" />
+                <ScalarProperty Name="Filter" ColumnName="Filter" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SecurityFilterSettings">
+            <EntityTypeMapping TypeName="AccountsModel.SecurityFilterSetting">
+              <MappingFragment StoreEntitySet="SecurityFilterSettings">
+                <ScalarProperty Name="InternalNetworkSubnets" ColumnName="InternalNetworkSubnets" />
+                <ScalarProperty Name="EnforceDeviceAuthorization" ColumnName="EnforceDeviceAuthorization" />
+                <ScalarProperty Name="BlockNTLM" ColumnName="BlockNTLM" />
+                <ScalarProperty Name="WhiteList" ColumnName="WhiteList" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuthorizedDomains">
+            <EntityTypeMapping TypeName="AccountsModel.AuthorizedDomain">
+              <MappingFragment StoreEntitySet="AuthorizedDomains">
+                <ScalarProperty Name="UPN" ColumnName="UPN" />
+                <ScalarProperty Name="NetBIOS" ColumnName="NetBIOS" />
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="DefaultDatabaseSchema" Value="SecurityFilter" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram Name="SecurityFilterManager" >
+        <EntityTypeShape EntityType="AccountsModel.AccountLockout" Width="1.5" PointX="0.75" PointY="0.75" Height="2.1725878906249996" />
+        <EntityTypeShape EntityType="AccountsModel.Log" Width="1.5" PointX="2.75" PointY="0.75" Height="3.1340950520833353" />
+        <EntityTypeShape EntityType="AccountsModel.SecurityFilterSetting" Width="1.875" PointX="4.875" PointY="0.75" Height="1.9802864583333353" />
+        <EntityTypeShape EntityType="AccountsModel.AuthorizedDomain" Width="1.5" PointX="7.375" PointY="0.75" Height="1.7879850260416657" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

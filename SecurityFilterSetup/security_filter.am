@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<r:applicationManifest
+ r:appUri="http://www.lync-solutions.com/security_filter"
+ xmlns:r="http://schemas.microsoft.com/lcs/2006/05">
+
+ <!-- Must run before UserServices to get registration requests -->
+ <r:allowRegistrationBeforeUserServices/>
+ <r:requestFilter methodNames="REGISTER,SERVICE"
+                  strictRoute="false"
+                  registrarGenerated="false"/>
+ <r:responseFilter reasonCodes="ALL"/>
+ <r:proxyByDefault action="true"/>
+
+ <r:splScript>
+    <![CDATA[
+
+    // 
+    // Check whether incoming login requests from the external network
+    // have previously been attempted and failed. If the number of 
+    // failed login attempts reaches a threshold, immediately fail the
+    // request without proxying to the internal network.
+    //
+    if (sipRequest)
+    {
+        // Only check messages originating from the external network.
+        if (sipRequest.Origin == MessageOrigin.NetworkExternal)
+        {
+            Dispatch("OnRequest");
+        }
+    }
+
+    //
+    // Track the number of times a failed login attempt occurred for
+    // each user.
+    //
+    if (sipResponse)
+    {
+        Dispatch("OnResponse");
+    }
+
+    ]]>
+ </r:splScript>
+</r:applicationManifest>
